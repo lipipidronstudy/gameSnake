@@ -84,7 +84,7 @@ void getStateKey() {
     } while (!GetAsyncKeyState(VK_LEFT) && !GetAsyncKeyState(VK_RIGHT) && !GetAsyncKeyState(VK_DOWN) &&
              !GetAsyncKeyState(VK_UP));
 }
-
+//make move
 //need fucking clear console
 int main() {
     makeNULL();
