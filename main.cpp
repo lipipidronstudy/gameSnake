@@ -41,6 +41,7 @@ void printState(){
     }
     std::cout<<'\n';
 }
+//ned clear console
 int main() {
     makeNULL();
     while (true) {
