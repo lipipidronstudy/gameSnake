@@ -1,0 +1,3 @@
+C:/Users/VadimAlg/Desktop/Alg_C++/qwe/cmake-build-debug/CMakeFiles/qwe.dir
+C:/Users/VadimAlg/Desktop/Alg_C++/qwe/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/VadimAlg/Desktop/Alg_C++/qwe/cmake-build-debug/CMakeFiles/rebuild_cache.dir
