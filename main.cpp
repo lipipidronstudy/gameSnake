@@ -32,6 +32,12 @@ void printState() {
 
 }
 
+void death() {
+    if (y >= 10 || x >= 10 || y < 0 || x < 0) {
+        live = false;
+    }
+}
+
 void move() {
     if (changeMove == 0) {
         consist[y][++x] = 5;
@@ -49,8 +55,10 @@ void move() {
         consist[--y][x] = 5;
         consist[y + 1][x] = 0;
     }
-
-    printState();
+    death();
+    if (live) {
+        printState();
+    }
 }
 
 void getStateKey() {
@@ -81,15 +89,15 @@ void getStateKey() {
                 changeMove = 3;
 
         }
-move();
+
+        move();
 
     } while (!GetAsyncKeyState(VK_LEFT) && !GetAsyncKeyState(VK_RIGHT) && !GetAsyncKeyState(VK_DOWN) &&
-             !GetAsyncKeyState(VK_UP));
+             !GetAsyncKeyState(VK_UP) && live);
     move();
 }
 
-//make move
-//need fucking clear console
+
 int main() {
     makeNULL();
     while (live) {
