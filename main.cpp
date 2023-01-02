@@ -5,6 +5,8 @@ int consist[10][10];
 int changeMove = 0;
 int x = 4;
 int y = 4;
+int score = 0;
+int speed = 1000;
 boolean live = true;
 
 void clearScreen() {
@@ -23,6 +25,7 @@ void makeNULL() {
 
 void printState() {
     clearScreen();
+    std::cout << "score: " << score << std::endl;
     for (int i = 0; i < 10; ++i) {
         for (int j = 0; j < 10; j++)
             std::cout << consist[i][j] << ' ';
@@ -38,20 +41,44 @@ void death() {
     }
 }
 
+void newApple() {
+    ++score;
+    speed-=10;
+    int newX = rand() % 9 + 0;
+    int newY = rand() % 9 + 0;
+    while (consist[newY][newX] == 5) {
+        newX = rand() % 9 + 0;
+        newY = rand() % 9 + 0;
+    }
+    consist[newY][newX] = 4;
+}
+
 void move() {
     if (changeMove == 0) {
+        if (consist[y][x + 1] == 4) {
+            newApple();
+        }
         consist[y][++x] = 5;
         consist[y][x - 1] = 0;
     }
     if (changeMove == 1) {
+        if (consist[y + 1][x] == 4) {
+            newApple();
+        }
         consist[++y][x] = 5;
         consist[y - 1][x] = 0;
     }
     if (changeMove == 2) {
+        if (consist[y][x - 1] == 4) {
+            newApple();
+        }
         consist[y][--x] = 5;
         consist[y][x + 1] = 0;
     }
     if (changeMove == 3) {
+        if (consist[y - 1][x] == 4) {
+            newApple();
+        }
         consist[--y][x] = 5;
         consist[y + 1][x] = 0;
     }
@@ -63,7 +90,7 @@ void move() {
 
 void getStateKey() {
     do {
-        Sleep(1000);
+        Sleep(speed);
         if (GetAsyncKeyState(VK_LEFT)) {
             keybd_event(VK_LEFT, 0, KEYEVENTF_KEYUP, 0);
             if (changeMove != 0)
@@ -102,8 +129,7 @@ int main() {
     makeNULL();
     while (live) {
         getStateKey();
-        printState();
-        move();
+
     }
     return 0;
 }
