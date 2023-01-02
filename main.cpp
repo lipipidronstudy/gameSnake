@@ -55,6 +55,7 @@ void move() {
 
 void getStateKey() {
     do {
+        Sleep(1000);
         if (GetAsyncKeyState(VK_LEFT)) {
             keybd_event(VK_LEFT, 0, KEYEVENTF_KEYUP, 0);
             if (changeMove != 0)
@@ -80,10 +81,13 @@ void getStateKey() {
                 changeMove = 3;
 
         }
-        move();
+move();
+
     } while (!GetAsyncKeyState(VK_LEFT) && !GetAsyncKeyState(VK_RIGHT) && !GetAsyncKeyState(VK_DOWN) &&
              !GetAsyncKeyState(VK_UP));
+    move();
 }
+
 //make move
 //need fucking clear console
 int main() {
@@ -91,6 +95,7 @@ int main() {
     while (live) {
         getStateKey();
         printState();
+        move();
     }
     return 0;
 }
