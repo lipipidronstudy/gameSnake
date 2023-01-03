@@ -1,6 +1,6 @@
 #include <iostream>
 #include <windows.h>
-
+#include <ctime>
 int consist[10][10];
 int lastcons[10][10];
 int changeMove = 0;
@@ -61,6 +61,7 @@ void death() {
 }
 
 void newApple() {
+    srand(time(0));
     ++score;
     speed -= 10;
     int newX = rand() % 9 + 0;
@@ -148,7 +149,6 @@ void getStateKey() {
 
 
 int main() {
-
     makeNULL();
     while (live) {
         getStateKey();
