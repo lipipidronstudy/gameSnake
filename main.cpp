@@ -2,12 +2,19 @@
 #include <windows.h>
 
 int consist[10][10];
+int lastcons[10][10];
 int changeMove = 0;
 int x = 4;
 int y = 4;
 int score = 0;
 int speed = 1000;
 boolean live = true;
+
+void copy() {
+    for (int i = 0; i < 10; ++i)
+        for (int j = 0; j < 10; ++j)
+            lastcons[i][j] = consist[i][j];
+}
 
 void clearScreen() {
     int n;
@@ -34,16 +41,28 @@ void printState() {
     std::cout << '\n';
 
 }
+void printLast(){
+     for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 10; j++)
+            std::cout << lastcons[i][j] << ' ';
+        std::cout << '\n';
+    }
+    std::cout << '\n';
+}
 
 void death() {
-    if (y >= 10 || x >= 10 || y < 0 || x < 0) {
+    if (y >= 10 || x >= 10 || y < 0 || x < 0)
         live = false;
-    }
+
+   if (lastcons[y][x] == 5)
+       live = false;
+
+
 }
 
 void newApple() {
     ++score;
-    speed-=10;
+    speed -= 10;
     int newX = rand() % 9 + 0;
     int newY = rand() % 9 + 0;
     while (consist[newY][newX] == 5) {
@@ -54,36 +73,39 @@ void newApple() {
 }
 
 void move() {
+
     if (changeMove == 0) {
         if (consist[y][x + 1] == 4) {
             newApple();
-        }
+        } else { consist[y][x] = 0; }
         consist[y][++x] = 5;
-        consist[y][x - 1] = 0;
+
     }
     if (changeMove == 1) {
         if (consist[y + 1][x] == 4) {
             newApple();
-        }
+        } else { consist[y][x] = 0; }
         consist[++y][x] = 5;
         consist[y - 1][x] = 0;
     }
     if (changeMove == 2) {
-        if (consist[y][x - 1] == 4) {
+        if (consist[y][x] == 4) {
             newApple();
-        }
+        } else { consist[y][x] = 0; }
         consist[y][--x] = 5;
         consist[y][x + 1] = 0;
     }
     if (changeMove == 3) {
         if (consist[y - 1][x] == 4) {
             newApple();
-        }
+        } else { consist[y][x] = 0; }
         consist[--y][x] = 5;
         consist[y + 1][x] = 0;
     }
     death();
+    copy();
     if (live) {
+        //printLast();
         printState();
     }
 }
@@ -126,6 +148,7 @@ void getStateKey() {
 
 
 int main() {
+
     makeNULL();
     while (live) {
         getStateKey();
