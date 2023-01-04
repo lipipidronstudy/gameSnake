@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.lang.Thread;
 
+
 public class Main {
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
         int[][] forState = new int[10][10];
@@ -14,8 +15,6 @@ public class Main {
         Thread.sleep(1000);
         while (true) {
             readerOfState(forState);
-            clearScreen();
-            printState(forState);
             workWithFrame(forState, snake);
             Thread.sleep(1000);
         }
@@ -32,41 +31,33 @@ public class Main {
         }
         reader.close();
     }
-
-    public static void clearScreen() {
-        for (int i = 0; i < 10; ++i) {
-            System.out.println("\n\n\n\n\n\n\n\n\n\n");
-        }
-    }
-
-    public static void printState(int[][] forState) {
-        for (int i = 0; i < 10; ++i) {
-            for (int j = 0; j < 10; ++j) {
-                System.out.print(forState[i][j]);
-                System.out.print(' ');
-            }
-            System.out.println();
-        }
-    }
-
     public static JFrame makeFrame() {
         JFrame snake = new JFrame("Snake");
         snake.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         snake.setLocationRelativeTo(null);
-        snake.setSize(550, 550);
-
+        snake.setSize(510, 530);
         snake.setVisible(true);
         return snake;
     }
 
-            public static void workWithFrame(int[][] forState, JFrame snake) {
-            Graphics g = null;
-            for (int i = 0; i < 10; ++i) {
-                for (int j = 0; j < 10; ++j) {
-                    if (forState[i][j] == 5) {
-                        //snake.(j * 50, i * 50, j * 50 + 50, i * 50 + 50);
-                    }
-                }
-            }
+    public static void paint(Graphics g, int y1, int x1,int color) {
+        if (color == 0) {
+            g.setColor(Color.white);
+
+        } else if (color == 5) {
+            g.setColor(Color.black);
+        } else {
+            g.setColor(Color.red);
+        }
+        g.fillRect(x1+10, y1+30,50,50);
     }
+
+    public static void workWithFrame(int[][] forState, JFrame snake) {
+        for (int i = 0; i < 10; ++i) {
+            for (int j = 0; j < 10; ++j) {
+                    paint(snake.getGraphics(), i * 50, j * 50, forState[i][j]);
+            }
+        }
+    }
+
 }
