@@ -11,6 +11,8 @@ int x = 4;
 int y = 4;
 int score = 0;
 int speed = 1000;
+int newX;
+int newY;
 boolean live = true;
 std::string name = R"(C:\Users\VadimAlg\Desktop\Alg_C++\state.txt)";
 
@@ -48,7 +50,7 @@ void printStateFile(){
 void printState() {
     clearScreen();
     printStateFile();
-    std::cout << "score: " << score << std::endl;
+    std::cout << "score: " << score <<' '<< "newX: " << newX << ' '<< "newY: "<<newY << std::endl;
     for (int i = 0; i < 10; ++i) {
         for (int j = 0; j < 10; j++)
             std::cout << consist[i][j] << ' ';
@@ -71,9 +73,9 @@ void newApple() {
     srand(time(0));
     ++score;
     speed -= 10;
-    int newX = rand() % 9 + 0;
-    int newY = rand() % 9 + 0;
-    while (consist[newY][newX] == 5) {
+    newX = rand() % 9 + 0;
+    newY = rand() % 9 + 0;
+    while (consist[newX][newY] == 5 || newY > 9 || newX > 9 || newX < 0 || newY < 0) {
         newX = rand() % 9 + 0;
         newY = rand() % 9 + 0;
     }
@@ -113,7 +115,6 @@ void move() {
     death();
     copy();
     if (live) {
-        //printLast();
         printState();
     }
 }
