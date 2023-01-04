@@ -43,7 +43,6 @@ public class Main {
     public static void paint(Graphics g, int y1, int x1,int color) {
         if (color == 0) {
             g.setColor(Color.white);
-
         } else if (color == 5) {
             g.setColor(Color.black);
         } else {
