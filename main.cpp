@@ -1,6 +1,9 @@
 #include <iostream>
 #include <windows.h>
 #include <ctime>
+#include <string>
+#include <fstream>
+
 int consist[10][10];
 int lastcons[10][10];
 int changeMove = 0;
@@ -9,6 +12,7 @@ int y = 4;
 int score = 0;
 int speed = 1000;
 boolean live = true;
+std::string name = R"(C:\Users\VadimAlg\Desktop\Alg_C++\state.txt)";
 
 void copy() {
     for (int i = 0; i < 10; ++i)
@@ -30,8 +34,20 @@ void makeNULL() {
     consist[4][7] = 4;
 }
 
+void printStateFile(){
+    std::ofstream state(name);
+    for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 10; j++)
+            state << consist[i][j] << ' ';
+        state << '\n';
+    }
+    state << '\n';
+    state.close();
+}
+
 void printState() {
     clearScreen();
+    printStateFile();
     std::cout << "score: " << score << std::endl;
     for (int i = 0; i < 10; ++i) {
         for (int j = 0; j < 10; j++)
@@ -41,21 +57,12 @@ void printState() {
     std::cout << '\n';
 
 }
-void printLast(){
-     for (int i = 0; i < 10; ++i) {
-        for (int j = 0; j < 10; j++)
-            std::cout << lastcons[i][j] << ' ';
-        std::cout << '\n';
-    }
-    std::cout << '\n';
-}
-
 void death() {
     if (y >= 10 || x >= 10 || y < 0 || x < 0)
         live = false;
 
-   if (lastcons[y][x] == 5)
-       live = false;
+    if (lastcons[y][x] == 5)
+        live = false;
 
 
 }
@@ -149,6 +156,7 @@ void getStateKey() {
 
 
 int main() {
+
     makeNULL();
     while (live) {
         getStateKey();
